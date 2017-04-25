@@ -1,0 +1,82 @@
+from PyQt5.QtWidgets import QApplication, QWidget, QFrame
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtCore import Qt, pyqtSignal, QTimer
+
+from .PointBox import PointBox
+from .Category import Category
+from Modules.AudioPlayer import AudioPlayer
+import json
+import os
+import traceback
+
+def clearLayout(layout):
+  while layout.count():
+    child = layout.takeAt(0)
+    if child.widget():
+      child.widget().deleteLater()
+
+
+class MainWindow:
+    class _MainWindow(QWidget):
+        game_loaded = pyqtSignal(str)
+        def __init__(self):
+            super().__init__()
+            #Create a some widgets for the audioplayer so it does not pop up if playing video
+            #We create 50 as a buffer..
+            self.videoframe = [ QFrame(None) for q in range(50)]
+            AudioPlayer(self.videoframe)
+
+            self.game_loaded.connect(self.load_game)
+            self.layout = QHBoxLayout()
+            self.setLayout(self.layout)
+            self.timer = QTimer()
+            self.timer.start(100)
+            self.timer.timeout.connect(self.dummy)
+            self.categories = []
+            self.categories.append(Category())
+            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+            self.categories.append(Category())
+            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+            self.categories.append(Category())
+            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+            self.categories.append(Category())
+            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+            self.categories.append(Category())
+            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+        def load_game(self, file_name):
+            self.tmp_cat = None
+            try:
+                self.game_settings = json.load(open(file_name))
+                if not self.game_settings["type"] == "game":
+                    return
+                self.tmp_cat = self.categories
+                self.categories = []
+                for category in sorted(self.game_settings["categories"].keys()):
+                    cat_dict = self.game_settings["categories"][category]
+                    #Construct full path to category file
+                    dirname = os.path.dirname(file_name)
+                    cat_file = os.path.join(dirname, cat_dict["file"])
+                    self.categories.append(Category())
+                    self.categories[-1].set_category(cat_file)
+
+                    print(cat_dict["file"])
+                self.tmp_cat = []
+                clearLayout(self.layout)
+                for c in self.categories:
+                    self.layout.addWidget(c, Qt.AlignCenter)
+            except:
+                self.categories = self.tmp_cat
+                traceback.print_exc()
+
+        def emit_game_loaded(self, str):
+            self.game_loaded.emit(str)
+
+        def dummy(self):
+            pass
+
+    instance = None
+    def __init__(self):
+        if MainWindow.instance == None:
+            MainWindow.instance = MainWindow._MainWindow()
+    def __getattr__(self, name):
+        return getattr(self.instance, name)

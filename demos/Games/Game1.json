@@ -1,0 +1,24 @@
+{
+    "type" : "game",
+    "title" : "GameDemo1",
+    "categories" : {
+    	"1"	: {
+                "file" : "cat1.json"
+    	},
+        "2"	: {
+                "file" : "cat2.json"
+        },
+        "3"	: {
+                "file" : "cat3.json"
+    	},
+        "4"	: {
+                "file" : "cat4.json"
+        },
+        "5"	: {
+                "file" : "cat5.json"
+        },
+        "6"	: {
+                "file" : "cat6.json"
+        }
+    }
+}
