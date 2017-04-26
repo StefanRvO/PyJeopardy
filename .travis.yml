@@ -1,8 +1,6 @@
 language: python
 dist: trusty
 
-python:
-- 3.5
 install:
 - virtualenv ~/py35 -p /usr/bin/python3.5
 - source ~/py35/bin/activate
@@ -25,6 +23,11 @@ script:
 before_script:
 - wget https://www.python.org/ftp/python/3.5.0/python-3.5.0.exe
 before_install: 
+- sudo add-apt-repository ppa:fkrull/deadsnakes
+- sudo apt-get update
+- sudo apt-get install python3.5
+- sudo apt-get install python3.5-dev
+- sudo apt-get install libncurses5-dev
 - Xvfb $DISPLAY &
 
 after_success: 
