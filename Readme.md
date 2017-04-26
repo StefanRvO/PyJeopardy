@@ -1,5 +1,7 @@
-#Requirements
+# Requirements
+
 vlc
+
 python3
-The modules in reauirements.txt, install with pip install -r 
-requirements.txt
+
+The modules in requirements.txt, install with 'pip install -r requirements.txt'
