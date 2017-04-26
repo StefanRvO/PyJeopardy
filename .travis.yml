@@ -5,7 +5,9 @@ install:
 - virtualenv ~/py35 -p /usr/bin/python3.5
 - source ~/py35/bin/activate
 - pip --version
-- pip install -r requirements.txt
+- pip install -U pip
+- pip --version
+- pip install -r requirements.txt | pip install PyQt5==
 - pip install cx_Freeze
 script:
 #Create linux release
