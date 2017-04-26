@@ -34,4 +34,4 @@ deploy:
 addons:
   apt:
     packages:
-      - wine
+      - wine1.6
