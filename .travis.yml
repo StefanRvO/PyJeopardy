@@ -7,7 +7,7 @@ install:
 - pip --version
 - pip install -U pip
 - pip --version
-- pip install -r requirements.txt | pip install PyQt5==
+- pip install -r requirements.txt
 - pip install cx_Freeze
 script:
 #Create linux release
