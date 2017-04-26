@@ -21,11 +21,11 @@ script:
 - echo $WINEDLLOVERRIDES
 - Xvfb $DISPLAY &
 - sleep 3
-- wine64 msiexec /i  python-64.msi /qn TARGETDIR=c:\\\\Python-64
-- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -U pip
-- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install cx_freeze
-- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -r requirements.txt
-- wine64 c:\\\\Python-64\\\\python.exe build_deployable.py bdist_msi
+#- wine64 msiexec /i  python-64.msi /qn TARGETDIR=c:\\\\Python-64
+#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -U pip
+#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install cx_freeze
+#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -r requirements.txt
+#- wine64 c:\\\\Python-64\\\\python.exe build_deployable.py bdist_msi
 - ls -a
 - ls build -a
 before_script:
