@@ -1,4 +1,6 @@
 language: python
+sudo: false
+
 python:
 - 3.5
 install:
@@ -28,3 +30,8 @@ deploy:
   file: release.tar.gz
   on:
     repo: StefanRvO/PyJeopardy
+
+addons:
+  apt:
+    packages:
+      - wine
