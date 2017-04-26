@@ -7,7 +7,7 @@ install:
 
 script:
   - python build_deployable.py build
-  - tar -zcvf release.tar.gz -C build
+  - tar -zcvf release.tar.gz -C build .
 after_success:
 
 
