@@ -4,10 +4,13 @@ dist: trusty
 python:
 - 3.5
 install:
+- virtualenv ~/py35 -p /usr/bin/python3.5
+- source ~/py35/bin/activate
 - pip install -r requirements.txt
 - pip install cx_Freeze
 script:
 #Create linux release
+- source ~/py35/bin/activate
 - python build_deployable.py build
 - tar -zcvf release.tar.gz -C build .
 - rm build -Rf
