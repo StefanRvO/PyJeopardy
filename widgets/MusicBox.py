@@ -15,8 +15,9 @@ import bidict
 MUSIC_STATES = bidict.bidict({  "DOWNLOADING" : -1,
                                 "NOT_PLAYED" : 0,
                                 "PLAYING_QUIZ" : 1,
-                                "PLAYING_ANSWER" : 2,
-                                "USED" : 3})
+                                "PAUSE"         :  2,
+                                "PLAYING_ANSWER" : 3,
+                                "USED" : 4})
 
 DIR_NAME = "Jepardy_" + str(random.randint(0,10000000))
 
@@ -43,10 +44,15 @@ class MusicBox(QWidget):
         self.playing_quiz_label = QLabel()
         self.playing_answer_label = QLabel()
         self.used_label = QLabel()
+        self.pause_label = QLabel()
         self.download_progress_label = QLabel()
         self.download_progress_label.setText("Downloading... \n 0%")
         self.label.setText(str(amount))
-        for label in [self.download_progress_label, self.label, self.playing_quiz_label, self.playing_answer_label, self.used_label]:
+        self.playing_quiz_label.setText("Playing Quiz")
+        self.used_label.setText("Used")
+        self.pause_label.setText("Paused")
+
+        for label in [self.download_progress_label, self.label, self.playing_quiz_label, self.pause_label, self.playing_answer_label, self.used_label]:
             label.setAlignment(Qt.AlignCenter)
             label.setStyleSheet("border: 1px solid grey");
             self.layout.addWidget(label)
@@ -86,6 +92,7 @@ class MusicBox(QWidget):
         self.filename = self.audio_info.download(filepath = self.file_path, quiet = True, callback=self.download_callback)
         if self.answer_str == None:
             self.answer_str = self.video.title
+        self.playing_answer_label.setText(self.answer_str)
 
     def download_callback(self, total, recvd, ratio, rate, eta):
         self.download_progress.emit(total, recvd, ratio, rate, eta)
@@ -99,28 +106,38 @@ class MusicBox(QWidget):
         self.download_progress_label.setText("Downloading... \n %f %%" % (ratio * 100) )
 
     def mousePressEvent(self, event):
-        if(self.download_finished == False):
-            return
-        if self.state == MUSIC_STATES["NOT_PLAYED"]:
-            self.state = MUSIC_STATES["PLAYING_QUIZ"]
-        elif self.state == MUSIC_STATES["PLAYING_QUIZ"]:
-            self.state = MUSIC_STATES["PLAYING_ANSWER"]
-        elif self.state == MUSIC_STATES["PLAYING_ANSWER"]:
-            self.state = MUSIC_STATES["USED"]
-        elif self.state == MUSIC_STATES["USED"]:
-            self.state = MUSIC_STATES["NOT_PLAYED"]
+        if event.button() == Qt.LeftButton:
+            self.left_click_event(event)
+        elif event.button() == Qt.RightButton:
+            self.right_click_event(event)
+    def left_click_event(self, event):
+            if(self.download_finished == False):
+                return
+            if self.state == MUSIC_STATES["NOT_PLAYED"]:
+                self.state = MUSIC_STATES["PLAYING_QUIZ"]
+                self.audio_player.play_file(self.filename, int(self.song_info["start_time"]) )
+                self.layout.setCurrentIndex(2)
+            elif self.state == MUSIC_STATES["PLAYING_QUIZ"]:
+                self.state = MUSIC_STATES["PAUSE"]
+                self.audio_player.pause()
+                self.layout.setCurrentIndex(3)
+            elif self.state == MUSIC_STATES["PAUSE"]:
+                self.state = MUSIC_STATES["PLAYING_ANSWER"]
+                self.audio_player.play_file(self.filename, int(self.song_info["answer_time"]) )
+                self.layout.setCurrentIndex(4)
+            elif self.state == MUSIC_STATES["PLAYING_ANSWER"]:
+                self.state = MUSIC_STATES["USED"]
+                self.audio_player.stop()
+                self.layout.setCurrentIndex(5)
+            elif self.state == MUSIC_STATES["USED"]:
+                self.state = MUSIC_STATES["NOT_PLAYED"]
+                self.audio_player.stop()
+                self.layout.setCurrentIndex(1)
 
-        print(MUSIC_STATES.inv[self.state])
-        if self.state == MUSIC_STATES["NOT_PLAYED"]:
-            self.audio_player.stop()
-            self.layout.setCurrentIndex(1)
-        elif self.state == MUSIC_STATES["PLAYING_QUIZ"]:
-            self.audio_player.play_file(self.filename, int(self.song_info["start_time"]) )
+            print(MUSIC_STATES.inv[self.state])
+
+    def right_click_event(self, event):
+        if self.state == MUSIC_STATES["PAUSE"]:
+            self.state = MUSIC_STATES["PLAYING_QUIZ"]
+            self.audio_player.play()
             self.layout.setCurrentIndex(2)
-        elif self.state == MUSIC_STATES["PLAYING_ANSWER"]:
-            self.audio_player.play_file(self.filename, int(self.song_info["answer_time"]) )
-            self.playing_answer_label.setText(self.answer_str)
-            self.layout.setCurrentIndex(3)
-        elif self.state == MUSIC_STATES["USED"]:
-            self.audio_player.stop()
-            self.layout.setCurrentIndex(4)

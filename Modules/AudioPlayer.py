@@ -20,6 +20,7 @@ class AudioPlayer:
             self.q_widget = qwidget
             self.cnt = 0
             self.prev_media = {}
+
         def play_url(self, url, time):
             self.renew_player()
             self.p.set_mrl(url)
@@ -38,6 +39,11 @@ class AudioPlayer:
             self.p.play()
             self.p.set_time(int(time) * 1000)
 
+        def pause(self):
+            self.p.set_pause(1)
+
+        def play(self):
+            self.p.set_pause(0)
 
         def stop(self):
             self.renew_player()
