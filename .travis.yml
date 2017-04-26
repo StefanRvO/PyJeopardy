@@ -24,7 +24,8 @@ script:
 - ls -a
 before_script:
 - wget https://www.python.org/ftp/python/3.5.0/python-3.5.0.exe
-before_install: - Xvfb $DISPLAY &
+before_install: 
+- Xvfb $DISPLAY &
 
 after_success: 
 deploy:
