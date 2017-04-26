@@ -13,7 +13,7 @@ script:
 - rm build -Rf
 #Create Windows release
 
-- wine python-3.5.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir="c:/python35"
+- wine python-3.5.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir="c:/python35" /nogui
 - wine c:/python35/python.exe -m pip install -U pip
 - wine c:/python35/python.exe -m pip install cx_freeze
 - wine c:/python35/python.exe -m pip install -r requirements.txt
