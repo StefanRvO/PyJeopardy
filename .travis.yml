@@ -7,6 +7,8 @@ install:
 script:
 - python build_deployable.py build
 - tar -zcvf release.tar.gz -C build .
+- ls -a
+- ls build -a
 after_success: 
 deploy:
   provider: releases
