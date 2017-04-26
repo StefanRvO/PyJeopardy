@@ -23,11 +23,9 @@ script:
 before_script:
 - wget https://www.python.org/ftp/python/3.5.0/python-3.5.0.exe
 before_install: 
-- sudo add-apt-repository ppa:fkrull/deadsnakes
-- sudo apt-get update
-- sudo apt-get install python3.5
-- sudo apt-get install python3.5-dev
-- sudo apt-get install libncurses5-dev
+- sudo add-apt-repository ppa:fkrull/deadsnakes -y
+- sudo apt-get update -y
+- sudo apt-get install python3.5 python3.5-dev libncurses5-dev -y
 - Xvfb $DISPLAY &
 
 after_success: 
