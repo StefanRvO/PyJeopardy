@@ -48,4 +48,5 @@ addons:
 env:
   global:
     - DISPLAY=:99.0
+    - WINEDLLOVERRIDES="mscoree,mshtml="
 
