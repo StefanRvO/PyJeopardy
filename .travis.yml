@@ -1,5 +1,6 @@
 language: generic
 dist: trusty
+sudo: required
 
 install:
 - virtualenv ~/py35 -p /usr/bin/python3.5
@@ -16,7 +17,7 @@ script:
 - tar -zcvf release.tar.gz -C build .
 - rm build -Rf
 #Create Windows release
-
+- echo $WINEDLLOVERRIDES
 - wine python-3.5.0.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir="c:/python35" /nogui
 - wine c:/python35/python.exe -m pip install -U pip
 - wine c:/python35/python.exe -m pip install cx_freeze
@@ -27,8 +28,13 @@ before_script:
 - wget https://www.python.org/ftp/python/3.5.0/python-3.5.0.exe
 before_install: 
 - sudo add-apt-repository ppa:fkrull/deadsnakes -y
+- sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -y
-- sudo apt-get install python3.5 python3.5-dev libncurses5-dev -y
+- sudo apt-get install --no-install-recommends python3.5 python3.5-dev libncurses5-dev wine1.8 -y
+- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+- echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+- sudo apt-get update
+- sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono
 - Xvfb $DISPLAY &
 
 after_success: 
@@ -41,10 +47,6 @@ deploy:
   on:
     repo: StefanRvO/PyJeopardy
 
-addons:
-  apt:
-    packages:
-      - wine
 env:
   global:
     - DISPLAY=:99.0
