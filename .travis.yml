@@ -21,6 +21,8 @@ script:
 - ls -a
 before_script:
 - wget https://www.python.org/ftp/python/3.5.0/python-3.5.0.exe
+before_install: - Xvfb $DISPLAY &
+
 after_success: 
 deploy:
   provider: releases
@@ -34,4 +36,8 @@ deploy:
 addons:
   apt:
     packages:
-      - wine1.6
+      - wine
+env:
+  global:
+    - DISPLAY=:99.0
+
