@@ -37,7 +37,7 @@ before_install:
 
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -y
-- sudo apt-get install --no-install-recommends xvfb wine -y
+- sudo apt-get install --no-install-recommends xvfb wine build-essential zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev libsqlite3-dev libgdbm-dev libdb-dev libexpat-dev libpcap-dev liblzma-dev libpcre3-dev -y
 - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 - echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
 - sudo apt-get update
