@@ -25,6 +25,7 @@ script:
 - Xvfb $DISPLAY &
 - sleep 3
 - wine64 python-64.exe /S
+- cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll"
 - wine64 python -m pip install -U pip
 - wine64 python -m pip install setuptools
 - wine64 python -m pip install cx_freeze
