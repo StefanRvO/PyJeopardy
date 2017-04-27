@@ -2,6 +2,7 @@
 
 from PyQt5.QtWidgets import QApplication, QWidget
 from widgets.MainWindow import MainWindow
+import codecs
 
 import sys
 def _main():
