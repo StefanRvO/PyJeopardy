@@ -18,16 +18,18 @@ script:
 - rm build -Rf
 #Create Windows release
 - export DISPLAY=:99.0
+- export WINEDLLOVERRIDES="mscoree,mshtml="
 - echo $WINEDLLOVERRIDES
 - Xvfb $DISPLAY &
 - sleep 3
-#- wine64 msiexec /i  python-64.msi /qn TARGETDIR=c:\\\\Python-64
-#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -U pip
-#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install cx_freeze
-#- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -r requirements.txt
-#- wine64 c:\\\\Python-64\\\\python.exe build_deployable.py bdist_msi
+- wine64 python-64.exe /S
+- wine64 python -m pip install -U pip
+- wine64 python -m pip install cx_freeze
+- wine64 python -m pip install -r requirements.txt
+- wine64 python build_deployable.py bdist_msi
+- ls -a
 before_script:
-- wget https://www.python.org/ftp/python/3.4.4/python-3.4.4.amd64.msi --output-document=python-64.msi
+- wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
 before_install: 
 - sudo add-apt-repository ppa:fkrull/deadsnakes -y
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
