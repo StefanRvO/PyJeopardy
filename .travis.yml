@@ -1,5 +1,5 @@
 language: generic
-dist: trusty
+dist: precise
 sudo: required
 
 install:
@@ -24,6 +24,7 @@ script:
 - sleep 3
 - wine64 python-64.exe /S
 - wine64 python -m pip install -U pip
+- wine64 python -m pip install setuptools
 - wine64 python -m pip install cx_freeze
 - wine64 python -m pip install -r requirements.txt
 - wine64 python build_deployable.py bdist_msi
