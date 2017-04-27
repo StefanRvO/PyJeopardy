@@ -1,50 +1,48 @@
-language: generic
-dist: trusty
 sudo: required
 
-install:
-- curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-- ~/.pythonz/bin/pythonz install 3.5.3
-- cat ~/.pythonz/log/build.log
-- virtualenv ~/py35 -p ~/.pythonz/pythons/CPython-3.5.3/bin/python3.5
-- source ~/py35/bin/activate
-- pip --version
-- pip install -U pip
-- pip --version
-- pip install -r requirements.txt
-- pip install cx_Freeze
-script:
-#Create linux release
-- source ~/py35/bin/activate
-- python build_deployable.py build
-- tar -zcvf release.tar.gz -C build .
-- rm build -Rf
-#Create Windows release
-- export DISPLAY=:99.0
-- export WINEDLLOVERRIDES="mscoree,mshtml="
-- echo $WINEDLLOVERRIDES
-- Xvfb $DISPLAY &
-- sleep 3
-- wine64 python-64.exe /S
-- cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python3.dll"
-- wine64 python -m pip install -U pip
-- wine64 python -m pip install setuptools
-- wine64 python -m pip install cx_freeze
-- wine64 python -m pip install -r requirements.txt
-- wine64 python build_deployable.py bdist_msi
-- mv dist/*.msi release.msi
-before_script:
-- wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
-before_install: 
+language: generic
 
-- sudo add-apt-repository ppa:ubuntu-wine/ppa -y
-- sudo apt-get update -y
-- sudo apt-get install --no-install-recommends xvfb wine build-essential zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev libsqlite3-dev libgdbm-dev libdb-dev libexpat-dev libpcap-dev liblzma-dev libpcre3-dev -y
-- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-- echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
-- sudo apt-get update
-- sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono
-- Xvfb $DISPLAY &
+arch:
+  packages:
+    -  wine
+    -  xorg-server-xvfb
+    -  base
+
+  script:
+    - wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
+    - curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+    - ~/.pythonz/bin/pythonz install 3.5.3
+    - cat ~/.pythonz/log/build.log
+    - virtualenv ~/py35 -p ~/.pythonz/pythons/CPython-3.5.3/bin/python3.5
+    - source ~/py35/bin/activate
+    - pip --version
+    - pip install -U pip
+    - pip --version
+    - pip install -r requirements.txt
+    - pip install cx_Freeze
+    #Create linux release
+    - source ~/py35/bin/activate
+    - python build_deployable.py build
+    - tar -zcvf release.tar.gz -C build .
+    - rm build -Rf
+    #Create Windows release
+    - export DISPLAY=:99.0
+    - export WINEDLLOVERRIDES="mscoree,mshtml="
+    - echo $WINEDLLOVERRIDES
+    - Xvfb $DISPLAY &
+    - sleep 3
+    - wine64 python-64.exe /S
+    - cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python3.dll"
+    - wine64 python -m pip install -U pip
+    - wine64 python -m pip install setuptools
+    - wine64 python -m pip install cx_freeze
+    - wine64 python -m pip install -r requirements.txt
+    - wine64 python build_deployable.py bdist_msi
+    - mv dist/*.msi release.msi
+script:
+- "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
+
+
 
 after_success: 
 deploy:
@@ -57,4 +55,7 @@ deploy:
     - release.msi
   on:
     repo: StefanRvO/PyJeopardy
+
+
+
 
