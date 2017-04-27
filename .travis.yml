@@ -9,14 +9,24 @@ arch:
     -  base
     -  wget
     -  python
+    -  expat
+    -  bzip2
+    -  gdbm
+    -  openssl
+    -  libffi
+    -  zlib
+    -  python-setuptools
+    -  python-resumable-urlretrieve
+    -  make
+
 
   script:
     - wget https://sourceforge.net/projects/winpython/files/latest/download -O py35.exe
-    #- curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-    #- ~/.pythonz/bin/pythonz install 3.5.3
-    #- cat ~/.pythonz/log/build.log
-    - pacaur -S python35 --noconfirm --noedit
-    - virtualenv ~/py35 -p ~/usr/bin/python3.5
+    - curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+    - ~/.pythonz/bin/pythonz install 3.5.3
+    - cat ~/.pythonz/log/build.log
+    #- pacaur -S python35 --noconfirm --noedit
+    - virtualenv ~/py35 -p ~/.pythonz/pythons/CPython-3.5.3/bin/python3.5
     - source ~/py35/bin/activate
     - pip --version
     - pip install -U pip
