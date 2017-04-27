@@ -26,8 +26,6 @@ script:
 #- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install cx_freeze
 #- wine64 c:\\\\Python-64\\\\python.exe c:\\\\Python-64\\\\scripts\\\\pip.exe install -r requirements.txt
 #- wine64 c:\\\\Python-64\\\\python.exe build_deployable.py bdist_msi
-- ls -a
-- ls build -a
 before_script:
 - wget https://www.python.org/ftp/python/3.4.4/python-3.4.4.amd64.msi --output-document=python-64.msi
 before_install: 
