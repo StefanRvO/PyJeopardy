@@ -9,7 +9,11 @@ class AudioPlayer:
         def __init__(self, qwidget = None):
             self.lock = threading.RLock()
             self.release_queue = queue.Queue()
-            self.i = vlc.Instance()
+            try:
+                self.i = vlc.Instance()
+            except NameError:
+                print("VLC Media Player is not installed! It is required to run this software, so please install it.")
+                sys.exit()
             print(self.i)
             self.p = self.i.media_player_new()
             print(self.p)
