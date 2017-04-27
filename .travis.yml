@@ -18,10 +18,11 @@ arch:
     -  python-setuptools
     -  python-resumable-urlretrieve
     -  make
+    -  base-devel
 
 
   script:
-    - wget https://sourceforge.net/projects/winpython/files/latest/download -O py35.exe
+    - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-64bit-3.5.3.1Zero.exe/download -O py35.exe
     - curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     - ~/.pythonz/bin/pythonz install 3.5.3 || true
     - cat ~/.pythonz/log/build.log
