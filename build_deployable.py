@@ -15,5 +15,5 @@ if sys.platform == "win32":
 setup(  name = "PyJeopardy",
         version = "0.1",
         description = "PyJeopardy!",
-        options = {"build_exe": build_exe_options,z "bdist_msi": bdist_msi_options},
+        options = {"build_exe": build_exe_options, "bdist_msi": bdist_msi_options},
         executables = [Executable("main.py", base=base)])
