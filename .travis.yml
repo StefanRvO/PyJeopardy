@@ -8,6 +8,7 @@ arch:
     -  xorg-server-xvfb
     -  base
     -  wget
+    -  python
 
   script:
     - wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
