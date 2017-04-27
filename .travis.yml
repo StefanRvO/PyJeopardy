@@ -5,6 +5,7 @@ sudo: required
 install:
 - curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 - ~/.pythonz/bin/pythonz install 3.5.3
+- cat ~/.pythonz/log/build.log
 - virtualenv ~/py35 -p ~/.pythonz/pythons/CPython-3.5.3/bin/python3.5
 - source ~/py35/bin/activate
 - pip --version
@@ -25,7 +26,7 @@ script:
 - Xvfb $DISPLAY &
 - sleep 3
 - wine64 python-64.exe /S
-- cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll"
+- cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python3.dll"
 - wine64 python -m pip install -U pip
 - wine64 python -m pip install setuptools
 - wine64 python -m pip install cx_freeze
