@@ -3,7 +3,8 @@ dist: trusty
 sudo: required
 
 install:
-- virtualenv ~/py35 -p /usr/bin/python3.5
+- curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+- virtualenv ~/py35 -p .pythonz/pythons/CPython-3.5.3/bin/python3.5
 - source ~/py35/bin/activate
 - pip --version
 - pip install -U pip
@@ -29,14 +30,14 @@ script:
 - wine64 python -m pip install -r requirements.txt
 - wine64 python build_deployable.py bdist_msi
 - ls -a
-- ls build -a
+- ls build/* -a
 before_script:
 - wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
 before_install: 
-- sudo add-apt-repository ppa:fkrull/deadsnakes -y
+
 - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
 - sudo apt-get update -y
-- sudo apt-get install --no-install-recommends xvfb python3.5 python3.5-dev libncurses5-dev wine -y
+- sudo apt-get install --no-install-recommends xvfb wine -y
 - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 - echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
 - sudo apt-get update
