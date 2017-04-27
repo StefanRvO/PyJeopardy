@@ -22,8 +22,8 @@ arch:
 
 
   script:
-    - mknod -m 444 /dev/random c 1 8
-    - mknod -m 444 /dev/urandom c 1 9
+    - mknod -m 444 /dev/random c 1 8 || true
+    - mknod -m 444 /dev/urandom c 1 9 || true
     - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-32bit-3.5.3.1Zero.exe/download -O py35.exe
     - curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     - ~/.pythonz/bin/pythonz install 3.5.3 || true
@@ -48,11 +48,11 @@ arch:
     - Xvfb $DISPLAY &
     - sleep 3
     - wine py35.exe /S /D=C:\py35
-    - wine WinPython-32bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install -U pip
-    - wine WinPython-32bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install setuptools
-    - wine WinPython-32bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install cx_freeze
-    - wine WinPython-32bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install -r requirements.txt
-    - wine WinPython-32bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe build_deployable.py bdist_msi
+    - wine WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -U pip
+    - wine WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install setuptools
+    - wine WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install cx_freeze
+    - wine WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -r requirements.txt
+    - wine WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe build_deployable.py bdist_msi
     - mv dist/*.msi release.msi
 script:
 - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
