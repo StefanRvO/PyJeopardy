@@ -11,11 +11,11 @@ arch:
     -  python
 
   script:
-    - wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
+    - wget https://sourceforge.net/projects/winpython/files/latest/download -O py35.exe
     #- curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
     #- ~/.pythonz/bin/pythonz install 3.5.3
     #- cat ~/.pythonz/log/build.log
-    - pacaur -S python35 --noconfirm
+    - pacaur -S python35 --noconfirm --noedit
     - virtualenv ~/py35 -p ~/usr/bin/python3.5
     - source ~/py35/bin/activate
     - pip --version
@@ -34,13 +34,12 @@ arch:
     - echo $WINEDLLOVERRIDES
     - Xvfb $DISPLAY &
     - sleep 3
-    - wine64 python-64.exe /S
-    - cp "$HOME/.wine/drive_c/Program Files/Miniconda3/python35.dll" "$HOME/.wine/drive_c/Program Files/Miniconda3/python3.dll"
-    - wine64 python -m pip install -U pip
-    - wine64 python -m pip install setuptools
-    - wine64 python -m pip install cx_freeze
-    - wine64 python -m pip install -r requirements.txt
-    - wine64 python build_deployable.py bdist_msi
+    - wine64 py35.exe /S /D=C:\py35
+    - wine64 WinPython-64bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install -U pip
+    - wine64 WinPython-64bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install setuptools
+    - wine64 WinPython-64bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install cx_freeze
+    - wine64 WinPython-64bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe -m pip install -r requirements.txt
+    - wine64 WinPython-64bit-3.5.3.1Qt5/python-3.5.3.amd64/python.exe build_deployable.py bdist_msi
     - mv dist/*.msi release.msi
 script:
 - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"

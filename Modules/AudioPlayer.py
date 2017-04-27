@@ -1,4 +1,3 @@
-import vlc
 import threading
 import time
 import queue
@@ -7,6 +6,7 @@ import sys
 class AudioPlayer:
     class _AudioPlayer:
         def __init__(self, qwidget = None):
+            import vlc
             self.lock = threading.RLock()
             self.release_queue = queue.Queue()
             self.i = vlc.Instance()
