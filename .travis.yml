@@ -29,6 +29,7 @@ script:
 - wine64 python -m pip install -r requirements.txt
 - wine64 python build_deployable.py bdist_msi
 - ls -a
+- ls build -a 
 before_script:
 - wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Windows-x86_64.exe --output-document=python-64.exe
 before_install: 
