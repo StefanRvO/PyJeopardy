@@ -12,7 +12,7 @@ def _main():
     w = MainWindow()
     w.resize(250, 150)
     w.move(300, 300)
-    w.setWindowTitle('Simple')
+    w.setWindowTitle('PyJeopardy!')
     w.show()
 
     sys.exit(app.exec_())

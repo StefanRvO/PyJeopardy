@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QFrame
+from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QLabel
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal, QTimer
 
@@ -21,18 +21,25 @@ class MainWindow:
         game_loaded = pyqtSignal(str)
         def __init__(self):
             super().__init__()
-            #Create a some widgets for the audioplayer so it does not pop up if playing video
-            #We create 50 as a buffer..
-            self.videoframe = [ QFrame(None) for q in range(50)]
-            AudioPlayer(self.videoframe)
 
-            self.game_loaded.connect(self.load_game)
-            self.layout = QHBoxLayout()
-            self.setLayout(self.layout)
             self.timer = QTimer()
             self.timer.start(100)
             self.timer.timeout.connect(self.dummy)
+            self.layout = QHBoxLayout()
+            self.setLayout(self.layout)
+
+            #Create a some widgets for the audioplayer so it does not pop up if playing video
+            #We create 50 as a buffer..
+            self.videoframe = [ QFrame(None) for q in range(50)]
+
+            try:
+                AudioPlayer(self.videoframe)
+            except:
+                self.showVLCError()
+                return
+
             self.categories = []
+            self.game_loaded.connect(self.load_game)
             self.categories.append(Category())
             self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
             self.categories.append(Category())
@@ -43,6 +50,17 @@ class MainWindow:
             self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
             self.categories.append(Category())
             self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+
+
+        def showVLCError(self):
+                error_str = "VLC Media Player is not installed!\nIt is required to run this software, so please install it."
+                print(error_str)
+                self.error_label = QLabel()
+                self.error_label.setText(error_str)
+                self.error_label.setAlignment(Qt.AlignCenter)
+                self.layout.addWidget(self.error_label, Qt.AlignCenter)
+                return
+
         def load_game(self, file_name):
             self.tmp_cat = None
             try:
