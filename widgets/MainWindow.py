@@ -53,6 +53,7 @@ class MainWindow:
 
 
         def showVLCError(self):
+                traceback.print_exc()
                 error_str = "VLC Media Player is not installed!\nIt is required to run this software, so please install it."
                 print(error_str)
                 self.error_label = QLabel()
