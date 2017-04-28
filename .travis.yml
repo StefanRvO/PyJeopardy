@@ -9,7 +9,7 @@ before_install:
 - docker pull base/archlinux
 
 script:
-- docker run -it -v $(pwd):/travis base/archlinux /bin/sh -c /travis/build.sh
+- docker run -it -v $(pwd):/travis base/archlinux /bin/sh -c "chmod +x /travis/build.sh && /travis/build.sh"
 
 
 after_success: 
