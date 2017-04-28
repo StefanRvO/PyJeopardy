@@ -6,9 +6,9 @@ install:
     - pip install -r requirements.txt
     - pip install cx_Freeze
     - wget https://dl.winehq.org/wine-builds/Release.key
-    - sudo apt-key add Release.key
-    - sudo add-apt-repository ppa:ubuntu-wine/ppa
-    - sudo apt-get update
+    - sudo apt-key add Release.key -y
+    - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+    - sudo apt-get update -y
     - sudo apt-get install --no-install-recommends -y  wine-staging  openssl vlc
 script:
 #linux
