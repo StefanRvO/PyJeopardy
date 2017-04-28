@@ -10,7 +10,7 @@ before_install:
 
 script:
 - chmod +x build.sh
-- docker run -it -v $(pwd):/travis base/archlinux /bin/sh -c /travis/build.sh
+- docker run -it -v $(pwd):/travis heichblatt/archlinux-yaourt /bin/sh -c /travis/build.sh
 
 
 after_success: 
