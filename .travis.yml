@@ -6,7 +6,7 @@ install:
     - pip install -r requirements.txt
     - pip install cx_Freeze
     - sudo apt-get update
-    - sudo apt-get install --no-install-recommends -y wine
+    - sudo apt-get install --no-install-recommends -y wine openssl vlc
 script:
 #linux
   - python build_deployable.py build
