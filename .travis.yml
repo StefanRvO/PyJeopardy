@@ -5,9 +5,6 @@ language: ruby
 services:
   - docker
 
-before_install:
-- docker pull base/archlinux
-
 script:
 - chmod +x build.sh
 - docker run -it -v $(pwd):/travis heichblatt/archlinux-yaourt /bin/sh -c /travis/build.sh

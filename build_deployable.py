@@ -3,22 +3,30 @@ import sys
 from cx_Freeze import setup, Executable
 import os
 import path
+
+
+def add_files_below(add_list, dir_):
+    for subdir in path.path(dir_).dirs():
+        add_files_below(add_list, subdir)
+    for f in path.path(dir_).files():
+        bin_includes.append(f)
 # Dependencies are automatically detected, but it might need fine tuning.
 bin_includes = []
 if sys.platform == "win32":
     pass
 else:
     lib_path = path.path('/usr/lib/')
-    for f in lib_path.files(pattern='libssl.so.*'):
+    vlc_path = '/usr/lib/vlc/'
+    for f in lib_path.files(pattern='libssl.so*'):
         bin_includes.append(f)
-
-    for f in lib_path.files(pattern='libcrypto.so.*'):
+    for f in lib_path.files(pattern='libcrypto.so*'):
         bin_includes.append(f)
-    for f in lib_path.files(pattern='libvlc.so.*'):
+    for f in lib_path.files(pattern='libvlc.so*'):
         bin_includes.append(f)
-    for f in lib_path.files(pattern='libvlccore.so.*'):
+    for f in lib_path.files(pattern='libvlccore.so*'):
         bin_includes.append(f)
-
+    add_files_below(bin_includes, vlc_path)
+print(bin_includes)
 # Dependencies are automatically detected, but it might need fine tuning.
 build_exe_options = { 'include_msvcr': True, "packages": ["codecs", "vlc", "urllib", "ssl", "os",], \
     "include_files" : ['demos/'],
