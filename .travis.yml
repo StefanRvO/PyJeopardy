@@ -5,8 +5,9 @@ python:
 install:
     - pip install -r requirements.txt
     - pip install cx_Freeze
-    - sudo add-apt-repository ppa:ricotz/unstable -y
-    - sudo apt-get update -y
+    - sudo add-apt-repository ppa:wine/wine-builds -y
+    - sudo apt update -y
+    - sudo apt install winehq-devel -y
     - sudo apt-get install --no-install-recommends -y  wine-stable  openssl vlc xvfb
 script:
 #linux
