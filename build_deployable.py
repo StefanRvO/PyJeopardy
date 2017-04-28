@@ -12,25 +12,29 @@ def add_files_below(add_list, dir_):
         bin_includes.append(f)
 # Dependencies are automatically detected, but it might need fine tuning.
 bin_includes = []
+extra_includes = []
 if sys.platform == "win32":
     pass
 else:
     lib_path = path.path('/usr/lib/')
     vlc_path = '/usr/lib/vlc/'
-    for f in lib_path.files(pattern='libssl.so*'):
-        bin_includes.append(f)
-    for f in lib_path.files(pattern='libcrypto.so*'):
-        bin_includes.append(f)
+    extra_includes = [vlc_path]
     for f in lib_path.files(pattern='libvlc.so*'):
-        bin_includes.append(f)
+        extra_includes.append(f)
     for f in lib_path.files(pattern='libvlccore.so*'):
-        bin_includes.append(f)
-    add_files_below(bin_includes, vlc_path)
+        extra_includes.append(f)
+    for f in lib_path.files(pattern='libssl.so*'):
+        bin_includes.append( str(f))
+    for f in lib_path.files(pattern='libcrypto.so*'):
+        bin_includes.append( str(f))
+    for
+    #add_files_below(bin_includes, vlc_path)
 print(bin_includes)
 # Dependencies are automatically detected, but it might need fine tuning.
 build_exe_options = { 'include_msvcr': True, "packages": ["codecs", "vlc", "urllib", "ssl", "os",], \
     "include_files" : ['demos/'],
-    'bin_includes' : bin_includes}
+    'bin_includes' : bin_includes,
+    'bin_path_includes': ['/usr/lib/', '/usr/lib/vlc/'],}
 # GUI applications require a different base on Windows (the default is for a
 # console application).
 bdist_msi_options = { }
