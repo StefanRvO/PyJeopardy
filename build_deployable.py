@@ -13,6 +13,7 @@ def add_files_below(add_list, dir_):
 # Dependencies are automatically detected, but it might need fine tuning.
 bin_includes = []
 extra_includes = []
+lib_paths = []
 if sys.platform == "win32":
     pass
 else:
