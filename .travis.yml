@@ -5,8 +5,11 @@ python:
 install:
     - pip install -r requirements.txt
     - pip install cx_Freeze
+    - wget https://dl.winehq.org/wine-builds/Release.key
+    - sudo apt-key add Release.key
+    - sudo add-apt-repository ppa:ubuntu-wine/ppa
     - sudo apt-get update
-    - sudo apt-get install --no-install-recommends -y wine openssl vlc
+    - sudo apt-get install --no-install-recommends -y  wine-staging  openssl vlc
 script:
 #linux
   - python build_deployable.py build
