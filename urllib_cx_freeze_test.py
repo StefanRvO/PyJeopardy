@@ -14,7 +14,8 @@ for f in lib_path.files(pattern='libssl.so.*'):
 
 for f in lib_path.files(pattern='libcrypto.so.*'):
     bin_includes.append(f)
-
+for f in lib_path.files(pattern='libvlc.so.*'):
+    bin_includes.append(f)
 
 build_exe_options = { 'include_msvcr': True, "packages": ["codecs", "vlc", "urllib", "ssl", "os", "urllib.request",],
 			'include_files' : [ "demos/",],

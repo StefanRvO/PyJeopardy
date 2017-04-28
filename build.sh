@@ -4,7 +4,7 @@ sudo pacman -Syy
 sudo pacman -S tar reflector --noconfirm --needed
 sudo reflector --latest 100 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 sudo pacman -Su --noconfirm
-yaourt -Syy python35 wine xorg-server-xvfb wget make base-devel --noconfirm --needed
+yaourt -Syy python35 wine xorg-server-xvfb wget vlc make base-devel --noconfirm --needed
 pip3.5 --version
 pip3.5 -U pip
 pip3.5 --version
