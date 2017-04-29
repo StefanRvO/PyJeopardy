@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from PyQt5 import QtWidgets.QApplication, QtWidgets.QWidget
+from PyQt5 import QtWidgets
 from widgets.MainWindow import MainWindow
 import codecs
 
