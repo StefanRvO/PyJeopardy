@@ -59,10 +59,10 @@ install:
     - pip install pyinstaller
     - sudo apt-get update 
     - sudo apt-get install --no-install-recommends -y openssl vlc
-script:
-#linux
-  - pyinstaller PyJeopardy_Linux.spec
 
+script:
+  - pyinstaller PyJeopardy_Linux.spec
+  - tar -zcvf release_$TOXENV.tar.gz -C dist .
 after_success: 
 deploy:
   provider: releases
