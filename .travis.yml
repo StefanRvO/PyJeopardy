@@ -23,7 +23,7 @@ matrix:
         - wine64 WinPython-32bit-3.5.1.3/python-3.5.1/python.exe -m pip install setuptools
         - wine64 WinPython-32bit-3.5.1.3/python-3.5.1/python.exe -m pip install pyinstaller
         - wine64 WinPython-32bit-3.5.1.3/python-3.5.1/python.exe -m pip install -r requirements.txt
-        - wine64 WinPython-32bit-3.5.1.3/python-3.5.1/Scripts/pyinstaller.exe main.py
+        - wine64 WinPython-32bit-3.5.1.3/python-3.5.1/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
         - tar -zcvf release_$TOXENV.tar.gz -C dist .
     - dist: trusty
       os: linux
