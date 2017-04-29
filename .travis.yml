@@ -21,12 +21,12 @@ matrix:
         - sleep 3
         - PYPREFIX=WinPython-32bit-3.5.3.1Zero/python-3.5.3
         - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-32bit-3.5.3.1Zero.exe/download -O py35.exe
-        - wine64 py35.exe /S /D=C:\py35
-        - wine64 $PYPREFIX/python.exe -m pip install -U pip
-        - wine64 $PYPREFIX/python.exe -m pip install setuptools
-        - wine64 $PYPREFIX/python.exe -m pip install pyinstaller
-        - wine64 $PYPREFIX/python.exe -m pip install -r requirements.txt
-        - wine64 $PYPREFIX/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
+        - wine py35.exe /S /D=C:\py35
+        - wine $PYPREFIX/python.exe -m pip install -U pip
+        - wine $PYPREFIX/python.exe -m pip install setuptools
+        - wine $PYPREFIX/python.exe -m pip install pyinstaller
+        - wine $PYPREFIX/python.exe -m pip install -r requirements.txt
+        - wine $PYPREFIX/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
         - tar -zcvf $RELEASE_NAME  -C dist .
     - dist: trusty
       os: linux
