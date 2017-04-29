@@ -26,9 +26,9 @@ else:
             extra_includes.append(f)
         for f in lib_path.files(pattern='libvlccore.so*'):
             extra_includes.append(f)
-        for f in lib_path.files(pattern='libssl.so*'):
+        for f in lib_path.files(pattern='libssl*'):
             bin_includes.append( str(f))
-        for f in lib_path.files(pattern='libcrypto.so*'):
+        for f in lib_path.files(pattern='libcrypto*'):
             bin_includes.append( str(f))
         #add_files_below(bin_includes, vlc_path)
 print(bin_includes)

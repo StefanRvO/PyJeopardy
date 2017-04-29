@@ -7,9 +7,12 @@ install:
     - pip install cx_Freeze
     - sudo add-apt-repository ppa:wine/wine-builds -y
     - sudo apt-get update 
-    - sudo apt-get install --no-install-recommends -y winehq-devel   openssl vlc xvfb
+    - sudo apt-get install --no-install-recommends -y winehq-devel   openssl vlc xvfb mlocate
+    - sudo updatedb
 script:
 #linux
+  - locate libssl
+  - locate libvlc
   - python build_deployable.py build
   - tar -zcvf release.tar.gz -C build .
 #Windows
