@@ -24,14 +24,18 @@ else:
         extra_includes.append(vlc_path)
         for f in lib_path.files(pattern='libvlc.so*'):
             extra_includes.append(f)
+            bin_includes.append(f.name)
             bin_includes.append(f)
         for f in lib_path.files(pattern='libvlccore.so*'):
             extra_includes.append(f)
+            bin_includes.append(f.name)
             bin_includes.append(f)
         for f in lib_path.files(pattern='libssl*'):
-            bin_includes.append( str(f))
+            bin_includes.append(f.name)
+            bin_includes.append(f)
         for f in lib_path.files(pattern='libcrypto*'):
-            bin_includes.append( str(f))
+            bin_includes.append(f.name)
+            bin_includes.append(f)
         #add_files_below(bin_includes, vlc_path)
 print(bin_includes)
 # Dependencies are automatically detected, but it might need fine tuning.
