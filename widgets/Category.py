@@ -1,8 +1,7 @@
 #A widget representing a entire music category
 
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFileDialog
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
 from .MusicBox import MusicBox
 from .QLabel_Clickable import QLabel_Clickable
 from widgets import MainWindow
@@ -16,17 +15,17 @@ def clearLayout(layout):
     if child.widget():
       child.widget().deleteLater()
 
-class Category(QWidget):
+class Category(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.layout = QVBoxLayout()
+        self.layout = QtWidgets.QVBoxLayout()
         self.setLayout(self.layout)
         self.title = QLabel_Clickable()
         self.title.setStyleSheet("border: 1px solid grey");
-        self.title.setAlignment(Qt.AlignCenter)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.setText("Click to load Category")
         self.title.clicked.connect(self.choose_file)
-        self.layout.addWidget(self.title, Qt.AlignCenter)
+        self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)
 
     def choose_file(self):
         fileName = QFileDialog.getOpenFileName(self, "Open Category or Game",
@@ -39,19 +38,19 @@ class Category(QWidget):
             clearLayout(self.layout)
             self.title = QLabel_Clickable()
             self.title.setStyleSheet("border: 1px solid grey");
-            self.title.setAlignment(Qt.AlignCenter)
+            self.title.setAlignment(QtCore.Qt.AlignCenter)
             self.title.setText("Error loading Category")
             self.title.clicked.connect(self.choose_file)
-            self.layout.addWidget(self.title, Qt.AlignCenter)
+            self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)
 
     def set_category(self, file_name):
         #Clear current layout
         clearLayout(self.layout)
         self.title = QLabel_Clickable()
         self.title.setStyleSheet("border: 1px solid grey");
-        self.title.setAlignment(Qt.AlignCenter)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.clicked.connect(self.choose_file)
-        self.layout.addWidget(self.title, Qt.AlignCenter)
+        self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)
 
         try:
             self.settings = json.load(open(file_name))
@@ -73,7 +72,7 @@ class Category(QWidget):
 
                 new_box = MusicBox(sub_cat, next_choice)
                 self.music_boxes.append(new_box)
-                self.layout.addWidget(new_box, Qt.AlignCenter)
+                self.layout.addWidget(new_box, QtCore.Qt.AlignCenter)
         except:
             traceback.print_exc()
             self.title.setText("Error loading category!")
