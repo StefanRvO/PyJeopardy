@@ -80,7 +80,7 @@ deploy:
     secure: D0YvRKsZcRykiCKKISaxVMjecHdDJLUmus8sMXBTqWIIRggzhZDSDJ96N+7qNVSQPwnPrH12vPjBkWypkEHuJxD7U99nTigzBWcBkQgk19lUN4mCTia7NYlWGe/3t2DvMJUmKrLnZlUPHfGG3agJTvww8Zh6mewBwBS67GTtUjKHrnBC3lqSKhJhy9OgeHMMa5V4wklD39zI0Il1lDsMFVNdeN748vuyUhBqtwButeU3dlPE9ObzT42SKhSojGfWCVosPsLDDYCE3zS8flJutr7F4qdnU9uO9dPnW9pIrMN8aI9qbVCQREhAvBCAv4+jRFEo6RnjXYIzCnueCiY/UULShaLOdsQ6MBELUnuP65J6CFgyTuInzsPIyrNcXDUJnBSDmYzmNfP+79NFYbqgknldHREggSy7C7AHIu8QoklaIZbAHt+pkFfJUQ8cU7RsennatYSH1Pj2+X7PhQlTiVTDf4Wb6SdPY5I04wd+CXf5D3fmdvsPxMFdJ0+c3xf78IzCXNhSH7mtJbZkcvKBPG1McHPo6Knrd6fGbD8Ijizb35fVxMK0nWAUe6QIgcZ4TzXTx/Xc2ms+mQ+Le8dAMXegMOXwqyQLVOcpqTaeoqUb+pvursQkqUj7bfP/PcHEsdDf9qzTveMUJwlRfslu4Oko3gsi+okP3mqWNHR5/2s=
   skip_cleanup: true
   file:
-    - release_$RELEASE_NAME
+    - $RELEASE_NAME
 #    - release.msi
   on:
 repo: StefanRvO/PyJeopardy
