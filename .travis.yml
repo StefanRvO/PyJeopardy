@@ -61,7 +61,7 @@ matrix:
         - docker pull heichblatt/archlinux-yaourt
       script:
         - chmod +x arch_build.sh
-        - docker run -it -v $(pwd):/travis --env="TOXENV=$TOXENV" heichblatt/archlinux-yaourt /bin/sh -c /travis/arch_build.sh
+        - docker run -it -v $(pwd):/travis --env="TOXENV=$TOXENV" --env="RELEASE_NAME=$RELEASE_NAME"  heichblatt/archlinux-yaourt /bin/sh -c /travis/arch_build.sh
 
           
 install:
