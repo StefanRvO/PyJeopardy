@@ -5,8 +5,9 @@ import path
 import traceback
 block_cipher = None
 this_dir = os.path.dirname(os.path.realpath('__file__'))
+print(this_dir)
 a = Analysis(['main.py'],
-             pathex=[this_dir],
+             pathex=[this_dir, this_dir + os.sep + "WinPython-32bit-3.5.3.1Zero/python-3.5.3/Lib/site-packages/PyQt5/Qt/bin"],
              binaries=[],
              datas=[ ("demos", "demos")],
              hiddenimports=["PyQt5.QtCore.*","PyQt5.*" ],
