@@ -25,7 +25,7 @@ matrix:
         - wine64 $PYPREFIX/python.exe -m pip install pyinstaller
         - wine64 $PYPREFIX/python.exe -m pip install -r requirements.txt
         - wine64 $PYPREFIX/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
-        - tar -zcvf $RELEASE_NAME -C dist .
+        - tar -zcvf $RELEASE_NAME  -C dist .
     - dist: trusty
       os: linux
       env: 
