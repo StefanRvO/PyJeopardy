@@ -5,7 +5,9 @@ matrix:
     - dist: xenial
       sudo: required
       os: linux
-      env: TOXENV=xenial_wine
+      env: 
+        - TOXENV=xenial_wine
+        - RELEASE_NAME=wine.tar.gz
       install:
         - sudo add-apt-repository ppa:wine/wine-builds -y
         - sudo apt-get update 
