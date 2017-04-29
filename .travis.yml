@@ -11,6 +11,7 @@ matrix:
         - sudo apt-get update 
         - sudo apt-get install --no-install-recommends -y winehq-devel xvfb
         #Windows
+      script:
         - export DISPLAY=:99.0
         - export WINEDLLOVERRIDES="mscoree,mshtml="
         - echo $WINEDLLOVERRIDES
