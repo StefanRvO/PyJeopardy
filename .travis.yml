@@ -1,16 +1,23 @@
 language: python
+dist: trusty
 matrix:
   include:
-    - os: linux
+    - dist: trusty
+      os: linux
       sudo: required
-      distro: trusty
       env: TOXENV=trusty
       python: 3.5
 
-    - os: linux
+    - dist: precise
       sudo: required
-      distro: precise
+      os: linux
       env: TOXENV=precise
+      python: 3.5
+
+    - dist: xenial
+      sudo: required
+      os: linux
+      env: TOXENV=xenial
       python: 3.5
 
 install:
