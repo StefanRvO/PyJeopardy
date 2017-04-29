@@ -25,29 +25,36 @@ matrix:
         - wine64 $PYPREFIX/python.exe -m pip install pyinstaller
         - wine64 $PYPREFIX/python.exe -m pip install -r requirements.txt
         - wine64 $PYPREFIX/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
-        - tar -zcvf release_$TOXENV.tar.gz -C dist .
+        - tar -zcvf $RELEASE_NAME -C dist .
     - dist: trusty
       os: linux
-      sudo: required
-      env: TOXENV=trusty
+      env: 
+        - TOXENV=trusty
+        - RELEASE_NAME=release_trusty.tar.gz
       python: 3.5
 
     - dist: precise
       sudo: required
       os: linux
-      env: TOXENV=precise
+      env: 
+        - TOXENV=precise
+        - RELEASE_NAME=release_precise.tar.gz
       python: 3.5
 
     - dist: xenial
       sudo: required
       os: linux
-      env: TOXENV=xenial
+      env: 
+        - TOXENV=xenial
+        - RELEASE_NAME=release_xenial.tar.gz
       python: 3.5
 
     - dist: xenial
       services: docker
       os: linux
-      env: TOXENV=archlinux
+      env: 
+        - TOXENV=archlinux
+        - RELEASE_NAME=archlinux_precise.tar.gz
       install:
         - docker pull heichblatt/archlinux-yaourt
       script:
@@ -63,7 +70,7 @@ install:
 
 script:
   - pyinstaller PyJeopardy_Linux.spec
-  - tar -zcvf release_$TOXENV.tar.gz -C dist .
+  - tar -zcvf $RELEASE_NAME -C dist .
 after_success: 
 deploy:
   provider: releases
