@@ -23,39 +23,47 @@ matrix:
     - dist: xenial
       services: docker
       os: linux
-      env: TOXENV=arch_docker
+      env: TOXENV=archlinux
       install:
         - docker pull heichblatt/archlinux-yaourt
       script:
         - chmod +x arch_build.sh
         - docker run -it -v $(pwd):/travis heichblatt/archlinux-yaourt /bin/sh -c /travis/arch_build.sh
+  allow_failures:
+    - dist: xenial
+      sudo: required
+      os: linux
+      env: TOXENV=xenial_wine
+      install:
+        - sudo add-apt-repository ppa:wine/wine-builds -y
+        - sudo apt-get update 
+        - sudo apt-get install --no-install-recommends -y winehq-devel xvfb
+        #Windows
+        - export DISPLAY=:99.0
+        - export WINEDLLOVERRIDES="mscoree,mshtml="
+        - echo $WINEDLLOVERRIDES
+        - Xvfb $DISPLAY &
+        - sleep 3
+        - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-32bit-3.5.3.1Zero.exe/download -O py35.exe
+        - wine64 py35.exe /S /D=C:\py35
+        - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -U pip
+        - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install setuptools
+        - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install pyinstaller
+        - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -r requirements.txt
+        - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe 
+        - mv dist/*.msi release_windows.msi
+        - tar -zcvf release_$TOXENV.tar.gz release_windows.msi
 
           
 install:
     - pip install -r requirements.txt
     - pip install pyinstaller
-    - sudo add-apt-repository ppa:wine/wine-builds -y
     - sudo apt-get update 
-    - sudo apt-get install --no-install-recommends -y winehq-devel openssl vlc xvfb mlocate
-    - sudo updatedb
+    - sudo apt-get install --no-install-recommends -y openssl vlc
 script:
 #linux
   - pyinstaller PyJeopardy_Linux.spec
   - tar -zcvf release_$TOXENV.tar.gz -C dist .
-#Windows
-#  - export DISPLAY=:99.0
-#  - export WINEDLLOVERRIDES="mscoree,mshtml="
-#  - echo $WINEDLLOVERRIDES
-#  - Xvfb $DISPLAY &
-#  - sleep 3
-#  - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-32bit-3.5.3.1Zero.exe/download -O py35.exe
-#  - wine64 py35.exe /S /D=C:\py35
-#  - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -U pip
-#  - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install setuptools
-#  - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install pyinstaller
-#  - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe -m pip install -r requirements.txt
-#  - wine64 WinPython-32bit-3.5.3.1Zero/python-3.5.3/python.exe 
-#  - mv dist/*.msi release.msi
 
 after_success: 
 deploy:
