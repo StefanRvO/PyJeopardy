@@ -17,7 +17,7 @@ matrix:
         - echo $WINEDLLOVERRIDES
         - Xvfb $DISPLAY &
         - sleep 3
-	- PYPREFIX=WinPython-32bit-3.5.1.3/python-3.5.1
+        - PYPREFIX=WinPython-32bit-3.5.1.3/python-3.5.1
         - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.1.3/WinPython-32bit-3.5.1.3.exe/download -O py35.exe
         - wine64 py35.exe /S /D=C:\py35
         - wine64 $PYPREFIX/python.exe -m pip install -U pip
