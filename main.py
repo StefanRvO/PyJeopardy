@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5 import QtWidgets.QApplication, QtWidgets.QWidget
 from widgets.MainWindow import MainWindow
 import codecs
 
 import sys
 def _main():
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
 
     w = MainWindow()
     w.resize(250, 150)
