@@ -17,15 +17,17 @@ lib_paths = []
 if sys.platform == "win32":
     pass
 else:
-    lib_paths = ['/usr/lib/', '/usr/lib/x86_64-linux-gnu/']
+    lib_paths = ['/usr/lib/', '/usr/lib/x86_64-linux-gnu/', '/lib', '/lib/x86_64-linux-gnu/']
     for l in lib_paths:
         lib_path = path.path(l)
         vlc_path = lib_path + '/vlc/'
-        extra_includes = [vlc_path]
+        extra_includes.append(vlc_path)
         for f in lib_path.files(pattern='libvlc.so*'):
             extra_includes.append(f)
+            bin_includes.append(f)
         for f in lib_path.files(pattern='libvlccore.so*'):
             extra_includes.append(f)
+            bin_includes.append(f)
         for f in lib_path.files(pattern='libssl*'):
             bin_includes.append( str(f))
         for f in lib_path.files(pattern='libcrypto*'):
