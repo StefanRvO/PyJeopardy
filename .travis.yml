@@ -1,11 +1,20 @@
 language: python
-sudo: required
-distro: trusty
-python:
-    - 3.5
+matrix:
+    - os: linux
+      sudo: required
+      distro: trusty
+      env: TOXENV=trusty
+      python: 3.5
+
+    - os: linux
+      sudo: required
+      distro: precise
+      env: TOXENV=precise
+      python: 3.5
+
 install:
     - pip install -r requirements.txt
-    - pip install cx_Freeze
+    - pip install pyinstaller
     - sudo add-apt-repository ppa:wine/wine-builds -y
     - sudo apt-get update 
     - sudo apt-get install --no-install-recommends -y winehq-devel openssl vlc xvfb mlocate
@@ -14,8 +23,8 @@ script:
 #linux
   - locate libssl
   - locate libvlc
-  - python build_deployable.py build
-  - tar -zcvf release.tar.gz -C build .
+  - pyinstaller PyJeopardy_Linux.spec
+  - tar -zcvf release.tar.gz -C dist .
 #Windows
   - export DISPLAY=:99.0
   - export WINEDLLOVERRIDES="mscoree,mshtml="

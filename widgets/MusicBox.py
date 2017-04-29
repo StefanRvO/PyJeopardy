@@ -11,6 +11,7 @@ import tempfile
 import os
 from Modules.AudioPlayer import AudioPlayer
 import bidict
+import encodings.idna
 
 MUSIC_STATES = bidict.bidict({  "DOWNLOADING" : -1,
                                 "NOT_PLAYED" : 0,
