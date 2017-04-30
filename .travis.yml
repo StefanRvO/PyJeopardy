@@ -8,25 +8,9 @@ matrix:
       env: 
         - TOXENV=xenial_wine
         - RELEASE_NAME=wine.tar.gz
-      install:
-        - sudo add-apt-repository ppa:wine/wine-builds -y
-        - sudo apt-get update 
-        - sudo apt-get install --no-install-recommends -y winehq-devel xvfb
-        #Windows
+      services: docker
       script:
-        - export DISPLAY=:99.0
-        - export WINEDLLOVERRIDES="mscoree,mshtml="
-        - echo $WINEDLLOVERRIDES
-        - Xvfb $DISPLAY &
-        - sleep 3
-        - PYPREFIX=WinPython-32bit-3.5.3.1Zero/python-3.5.3
-        - wget https://sourceforge.net/projects/winpython/files/WinPython_3.5/3.5.3.1/WinPython-32bit-3.5.3.1Zero.exe/download -O py35.exe
-        - wine py35.exe /S /D=C:\py35
-        - wine $PYPREFIX/python.exe -m pip install -U pip
-        - wine $PYPREFIX/python.exe -m pip install setuptools
-        - wine $PYPREFIX/python.exe -m pip install pyinstaller
-        - wine $PYPREFIX/python.exe -m pip install -r requirements.txt
-        - wine $PYPREFIX/Scripts/pyinstaller.exe PyJeopardy_Wine.spec
+        - docker run -it -v "$(pwd):/src/" cdrx/pyinstaller-windows:python3 "/bin/bash -c /src/wine_build.sh"
         - tar -zcvf $RELEASE_NAME  -C dist .
     - dist: trusty
       os: linux
@@ -56,7 +40,7 @@ matrix:
       os: linux
       env: 
         - TOXENV=archlinux
-        - RELEASE_NAME=archlinux_precise.tar.gz
+        - RELEASE_NAME=archlinux.tar.gz
       install:
         - docker pull heichblatt/archlinux-yaourt
       script:
@@ -81,6 +65,5 @@ deploy:
   skip_cleanup: true
   file:
     - $RELEASE_NAME
-#    - release.msi
   on:
 repo: StefanRvO/PyJeopardy

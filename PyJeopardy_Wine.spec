@@ -5,11 +5,18 @@ import path
 import traceback
 block_cipher = None
 this_dir = os.path.dirname(os.path.realpath('__file__'))
+vlc_path = this_dir + os.sep + "vlc" + os.sep
+
+qt_lib_path = "C:" + os.sep + "Python35" + os.sep + "Lib" + os.sep + "site-packages" + os.sep + "PyQt5" + os.sep + "Qt" + os.sep + "bin"
+print(qt_lib_path)
+
 print(this_dir)
 a = Analysis(['main.py'],
-             pathex=[this_dir, this_dir + os.sep + "WinPython-32bit-3.5.3.1Zero/python-3.5.3/Lib/site-packages/PyQt5/Qt/bin"],
-             binaries=[],
-             datas=[ ("demos", "demos")],
+             pathex=[this_dir, qt_lib_path],
+             binaries=[(vlc_path + "libvlc.dll", "libvlc.dll"), 
+			(vlc_path + "libvlccore.dll", "libvlccore.dll")],
+             datas=[ ("demos", "demos"),
+			("plugins", "plugins")],
              hiddenimports=["PyQt5.QtCore.*","PyQt5.*" ],
              hookspath=[],
              runtime_hooks=[],

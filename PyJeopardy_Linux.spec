@@ -8,15 +8,24 @@ block_cipher = None
 this_dir = os.path.dirname(os.path.realpath('__file__'))
 print(this_dir)
 vlc_lib_include = []
+vlc_lib_path = ""
+lib_path = ""
 lib_paths = ['/usr/lib/', '/usr/lib/x86_64-linux-gnu/', '/lib/', '/lib/x86_64-linux-gnu/']
 for l in lib_paths:
     if(l + "vlc" in path.path(l).dirs()):
+        for f in path.path(l).files(pattern="libvlc.so"):
+            print(f)
+            vlc_lib_include.append( (f,  f.name) )
+        for f in path.path(l).files(pattern="libvlccore.so"):
+            print(f)
+            vlc_lib_include.append( (f,  f.name) )
         vlc_lib_path = [ (l + "vlc", "vlc")]
         break
 
+print(vlc_lib_include)
 a = Analysis(['main.py'],
              pathex=[this_dir],
-             binaries=[],
+             binaries=vlc_lib_include,
              datas=[ ("demos", "demos")] + vlc_lib_path,
              hiddenimports=[],
              hookspath=[],

@@ -10,4 +10,4 @@ cd /travis
 sudo pip3.5 install -r requirements.txt
 sudo pip3.5 install pyinstaller
 pyinstaller PyJeopardy_Linux.spec
-tar -zcvf release_archlinux.tar.gz -C dist .
+tar -zcvf $RELEASE_NAME -C dist .
