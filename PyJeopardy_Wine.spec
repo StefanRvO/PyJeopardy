@@ -13,8 +13,8 @@ print(qt_lib_path)
 print(this_dir)
 a = Analysis(['main.py'],
              pathex=[this_dir, qt_lib_path],
-             binaries=[(vlc_path + "libvlc.dll", "libvlc.dll"), 
-			(vlc_path + "libvlccore.dll", "libvlccore.dll")],
+             binaries=[(vlc_path + "libvlc.dll", ""), 
+			(vlc_path + "libvlccore.dll", "")],
              datas=[ ("demos", "demos"),
 			("plugins", "plugins")],
              hiddenimports=["PyQt5.QtCore.*","PyQt5.*" ],
