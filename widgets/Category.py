@@ -28,7 +28,7 @@ class Category(QtWidgets.QWidget):
         self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)
 
     def choose_file(self):
-        fileName = QFileDialog.getOpenFileName(self, "Open Category or Game",
+        fileName = QtWidgets.QFileDialog.getOpenFileName(self, "Open Category or Game",
         ",", "Json Files (*.json)")[0]
         if fileName == "": return
         try:
