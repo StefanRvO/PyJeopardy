@@ -13,7 +13,7 @@ matrix:
         - docker pull cdrx/pyinstaller-windows:python3
       script:
         - docker run -it -v "$(pwd):/src/" cdrx/pyinstaller-windows:python3 "/bin/bash -c /src/wine_build.sh"
-        - zip windows dist
+        - zip -r windows dist
     - dist: trusty
       os: linux
       env: 
