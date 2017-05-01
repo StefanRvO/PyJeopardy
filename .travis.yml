@@ -7,13 +7,13 @@ matrix:
       os: linux
       env: 
         - TOXENV=xenial_wine
-        - RELEASE_NAME=wine.tar.gz
+        - RELEASE_NAME=windows.zip
       services: docker
       install:
         - docker pull cdrx/pyinstaller-windows:python3
       script:
         - docker run -it -v "$(pwd):/src/" cdrx/pyinstaller-windows:python3 "/bin/bash -c /src/wine_build.sh"
-        - tar -zcvf $RELEASE_NAME  -C dist .
+        - zip windows dist
     - dist: trusty
       os: linux
       env: 
