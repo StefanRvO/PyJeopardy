@@ -11,6 +11,7 @@ import tempfile
 import os
 from Modules.AudioPlayer import AudioPlayer
 import bidict
+import encodings.idna
 
 MUSIC_STATES = bidict.bidict({  "DOWNLOADING" : -1,
                                 "NOT_PLAYED" : 0,
@@ -87,7 +88,6 @@ class MusicBox(QWidget):
                 continue
             break
         print("best: ", self.audio_info.bitrate, self.audio_info.extension, self.audio_info.get_filesize())
-
         self.file_path = os.path.normpath(os.path.join(self.download_dir, str(random.randint(0,10000000)) + self.video.title + "." + self.audio_info.extension))
         self.filename = self.audio_info.download(filepath = self.file_path, quiet = True, callback=self.download_callback)
         if self.answer_str == None:

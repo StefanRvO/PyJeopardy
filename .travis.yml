@@ -1,20 +1,71 @@
 language: python
-python:
-    - 3.5
+dist: trusty
+matrix:
+  include:
+    - dist: xenial
+      sudo: required
+      os: linux
+      env: 
+        - TOXENV=xenial_wine
+        - RELEASE_NAME=wine.tar.gz
+      services: docker
+      install:
+        - docker pull cdrx/pyinstaller-windows:python3
+      script:
+        - docker run -it -v "$(pwd):/src/" cdrx/pyinstaller-windows:python3 "/bin/bash -c /src/wine_build.sh"
+        - tar -zcvf $RELEASE_NAME  -C dist .
+    - dist: trusty
+      os: linux
+      env: 
+        - TOXENV=trusty
+        - RELEASE_NAME=release_trusty.tar.gz
+      python: 3.5
+
+    - dist: precise
+      sudo: required
+      os: linux
+      env: 
+        - TOXENV=precise
+        - RELEASE_NAME=release_precise.tar.gz
+      python: 3.5
+
+    - dist: xenial
+      sudo: required
+      os: linux
+      env: 
+        - TOXENV=xenial
+        - RELEASE_NAME=release_xenial.tar.gz
+      python: 3.5
+
+    - dist: xenial
+      services: docker
+      os: linux
+      env: 
+        - TOXENV=archlinux
+        - RELEASE_NAME=archlinux.tar.gz
+      install:
+        - docker pull heichblatt/archlinux-yaourt
+      script:
+        - chmod +x arch_build.sh
+        - docker run -it -v $(pwd):/travis --env="TOXENV=$TOXENV" --env="RELEASE_NAME=$RELEASE_NAME"  heichblatt/archlinux-yaourt /bin/sh -c /travis/arch_build.sh
+
+          
 install:
     - pip install -r requirements.txt
-    - pip install cx_Freeze
+    - pip install pyinstaller
+    - sudo apt-get update 
+    - sudo apt-get install --no-install-recommends -y openssl vlc
 
 script:
-  - python build_deployable.py build
-  - tar -zcvf release.tar.gz -C build
-after_success:
-
-
-# This reportedly works around an issue downloading packages from pypi on
-# travis.  Consider removing this after the underlying issue is fixed.
-# https://github.com/travis-ci/travis-ci/issues/2389
-sudo: false
-
-matrix:
-fast_finish: true
+  - pyinstaller PyJeopardy_Linux.spec
+  - tar -zcvf $RELEASE_NAME -C dist .
+after_success: 
+deploy:
+  provider: releases
+  api_key:
+    secure: D0YvRKsZcRykiCKKISaxVMjecHdDJLUmus8sMXBTqWIIRggzhZDSDJ96N+7qNVSQPwnPrH12vPjBkWypkEHuJxD7U99nTigzBWcBkQgk19lUN4mCTia7NYlWGe/3t2DvMJUmKrLnZlUPHfGG3agJTvww8Zh6mewBwBS67GTtUjKHrnBC3lqSKhJhy9OgeHMMa5V4wklD39zI0Il1lDsMFVNdeN748vuyUhBqtwButeU3dlPE9ObzT42SKhSojGfWCVosPsLDDYCE3zS8flJutr7F4qdnU9uO9dPnW9pIrMN8aI9qbVCQREhAvBCAv4+jRFEo6RnjXYIzCnueCiY/UULShaLOdsQ6MBELUnuP65J6CFgyTuInzsPIyrNcXDUJnBSDmYzmNfP+79NFYbqgknldHREggSy7C7AHIu8QoklaIZbAHt+pkFfJUQ8cU7RsennatYSH1Pj2+X7PhQlTiVTDf4Wb6SdPY5I04wd+CXf5D3fmdvsPxMFdJ0+c3xf78IzCXNhSH7mtJbZkcvKBPG1McHPo6Knrd6fGbD8Ijizb35fVxMK0nWAUe6QIgcZ4TzXTx/Xc2ms+mQ+Le8dAMXegMOXwqyQLVOcpqTaeoqUb+pvursQkqUj7bfP/PcHEsdDf9qzTveMUJwlRfslu4Oko3gsi+okP3mqWNHR5/2s=
+  skip_cleanup: true
+  file:
+    - $RELEASE_NAME
+  on:
+repo: StefanRvO/PyJeopardy

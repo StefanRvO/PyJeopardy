@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import QApplication, QWidget
+import PyQt5
 from widgets.MainWindow import MainWindow
+import codecs
 
 import sys
 def _main():
 
-    app = QApplication(sys.argv)
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
 
     w = MainWindow()
     w.resize(250, 150)
     w.move(300, 300)
-    w.setWindowTitle('Simple')
+    w.setWindowTitle('PyJeopardy!')
     w.show()
 
     sys.exit(app.exec_())
