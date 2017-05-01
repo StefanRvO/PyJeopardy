@@ -2,6 +2,7 @@
 
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QStackedLayout, QLabel
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, pyqtSignal
 import json
 import pafy
@@ -55,7 +56,7 @@ class MusicBox(QWidget):
 
         for label in [self.download_progress_label, self.label, self.playing_quiz_label, self.pause_label, self.playing_answer_label, self.used_label]:
             label.setAlignment(Qt.AlignCenter)
-            label.setStyleSheet("border: 1px solid grey");
+            label.setStyleSheet("border: 3px solid black");
             self.layout.addWidget(label)
 
         self.layout.setCurrentIndex(0)
@@ -69,6 +70,7 @@ class MusicBox(QWidget):
             pass
         if self.song_info["type"] == "youtube":
             self.load_youtube()
+
 
     def load_youtube(self):
         self.video = pafy.new(self.song_info["url"], basic = False)
@@ -110,6 +112,7 @@ class MusicBox(QWidget):
             self.left_click_event(event)
         elif event.button() == Qt.RightButton:
             self.right_click_event(event)
+
     def left_click_event(self, event):
             if(self.download_finished == False):
                 return
@@ -127,17 +130,34 @@ class MusicBox(QWidget):
                 self.layout.setCurrentIndex(4)
             elif self.state == MUSIC_STATES["PLAYING_ANSWER"]:
                 self.state = MUSIC_STATES["USED"]
-                self.audio_player.stop()
+                self.audio_player.pause()
                 self.layout.setCurrentIndex(5)
-            elif self.state == MUSIC_STATES["USED"]:
-                self.state = MUSIC_STATES["NOT_PLAYED"]
-                self.audio_player.stop()
-                self.layout.setCurrentIndex(1)
+            #elif self.state == MUSIC_STATES["USED"]:
+            #    self.state = MUSIC_STATES["NOT_PLAYED"]
+            #    self.audio_player.pause()
+            #    self.layout.setCurrentIndex(1)
 
             print(MUSIC_STATES.inv[self.state])
 
     def right_click_event(self, event):
-        if self.state == MUSIC_STATES["PAUSE"]:
+
+        if self.state == MUSIC_STATES["NOT_PLAYED"]:
+            self.state = MUSIC_STATES["USED"]
+            self.audio_player.pause()
+            self.layout.setCurrentIndex(5)
+        elif self.state == MUSIC_STATES["PLAYING_QUIZ"]:
+            self.state = MUSIC_STATES["NOT_PLAYED"]
+            self.audio_player.pause()
+            self.layout.setCurrentIndex(1)
+        elif self.state == MUSIC_STATES["PAUSE"]:
             self.state = MUSIC_STATES["PLAYING_QUIZ"]
             self.audio_player.play()
             self.layout.setCurrentIndex(2)
+        elif self.state == MUSIC_STATES["PLAYING_ANSWER"]:
+            self.state = MUSIC_STATES["NOT_PLAYED"]
+            self.audio_player.pause()
+            self.layout.setCurrentIndex(1)
+        elif self.state == MUSIC_STATES["USED"]:
+            self.state = MUSIC_STATES["NOT_PLAYED"]
+            self.audio_player.pause()
+            self.layout.setCurrentIndex(1)

@@ -2,6 +2,7 @@
 
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QSizePolicy
 from .MusicBox import MusicBox
 from .QLabel_Clickable import QLabel_Clickable
 from widgets import MainWindow
@@ -21,11 +22,14 @@ class Category(QtWidgets.QWidget):
         self.layout = QtWidgets.QVBoxLayout()
         self.setLayout(self.layout)
         self.title = QLabel_Clickable()
-        self.title.setStyleSheet("border: 1px solid grey");
+        self.title.setStyleSheet("border: 5px solid black");
         self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.setText("Click to load Category")
+        self.title.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.title.clicked.connect(self.choose_file)
         self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0,0,0,0)
 
     def choose_file(self):
         fileName = QtWidgets.QFileDialog.getOpenFileName(self, "Open Category or Game",
@@ -37,7 +41,7 @@ class Category(QtWidgets.QWidget):
             traceback.print_exc()
             clearLayout(self.layout)
             self.title = QLabel_Clickable()
-            self.title.setStyleSheet("border: 1px solid grey");
+            self.title.setStyleSheet("border: 5px solid black");
             self.title.setAlignment(QtCore.Qt.AlignCenter)
             self.title.setText("Error loading Category")
             self.title.clicked.connect(self.choose_file)
@@ -47,7 +51,7 @@ class Category(QtWidgets.QWidget):
         #Clear current layout
         clearLayout(self.layout)
         self.title = QLabel_Clickable()
-        self.title.setStyleSheet("border: 1px solid grey");
+        self.title.setStyleSheet("border: 5px solid black");
         self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.clicked.connect(self.choose_file)
         self.layout.addWidget(self.title, QtCore.Qt.AlignCenter)

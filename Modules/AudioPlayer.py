@@ -38,6 +38,7 @@ class AudioPlayer:
             self.p.set_media(self.media)
             self.p.play()
             self.p.set_time(int(time) * 1000)
+            self.p.audio_set_volume(100)
 
         def pause(self):
             self.p.set_pause(1)
@@ -50,7 +51,7 @@ class AudioPlayer:
 
         def renew_player(self):
             if self.p:
-                self.p.pause()
+                self.p.stop()
                 self.release_queue.put(self.p)
                 self.p = self.i.media_player_new()
                 #We need to attach the player to a widget to prevent it from popping up.
@@ -81,7 +82,7 @@ class AudioPlayer:
         if AudioPlayer.instance == None:
             AudioPlayer.instance = AudioPlayer._AudioPlayer(q_widget)
     def __getattr__(self, name):
-        return getattr(self.instance, name)
+        return getattr(AudioPlayer.instance, name)
 
 
 

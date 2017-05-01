@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QLabel, QLayout, QSizePolicy
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSignal, QTimer
-
+from PyQt5 import QtGui
 from .PointBox import PointBox
 from .Category import Category
 from Modules.AudioPlayer import AudioPlayer
@@ -27,7 +27,10 @@ class MainWindow:
             self.timer.timeout.connect(self.dummy)
             self.layout = QHBoxLayout()
             self.setLayout(self.layout)
+            palette = QtGui.QPalette()
 
+            palette.setColor(QtGui.QPalette.Background,Qt.blue)
+            self.setPalette(palette)
             #Create a some widgets for the audioplayer so it does not pop up if playing video
             #We create 50 as a buffer..
             self.videoframe = [ QFrame(None) for q in range(50)]
@@ -37,21 +40,18 @@ class MainWindow:
             except:
                 self.showVLCError()
                 return
-
+            self.layout.addStretch()
             self.categories = []
             self.game_loaded.connect(self.load_game)
-            self.categories.append(Category())
-            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
-            self.categories.append(Category())
-            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
-            self.categories.append(Category())
-            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
-            self.categories.append(Category())
-            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
-            self.categories.append(Category())
-            self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
+            for i in range(5):
+                self.categories.append(Category())
+                self.categories[-1].setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
+                self.layout.addWidget(self.categories[-1], Qt.AlignCenter)
 
+            self.layout.setSpacing(0)
+            self.layout.setContentsMargins(0,0,0,0)
+            self.layout.addStretch()
         def showVLCError(self):
                 traceback.print_exc()
                 error_str = "VLC Media Player is not installed!\nIt is required to run this software, so please install it."
